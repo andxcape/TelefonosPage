@@ -11,7 +11,7 @@ function login(req, res) {
             bcrypt.compare(paramentros.password, usuarioGuardado.password, (err, verificacionPassword) => {
                 if (verificacionPassword) {
                     return res.status(200).send({
-                        token: jwt.crearToken(usuarioGuardado)
+                        token: jwt.crearToken(usuarioGuardado),objeto:usuarioGuardado
                     })
 
                 } else {

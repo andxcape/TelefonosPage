@@ -2,34 +2,28 @@ const Llamadas = require('../models/llamadas.model');
 const bcrypt = require('bcrypt-nodejs');
 const jwt = require('../services/jwt');
 
-function agregarLlamada(req, res) {
+function guardarLlamada(req, res) {
     var parametros = req.body;
     var llamadasModel = new Llamadas();
 
-    if (parametros.numero) {
         llamadasModel.numero = parametros.numero;
         llamadasModel.descripcion = parametros.descripcion;
         llamadasModel.solucion = parametros.solucion;
-        sucursalModel.idEmpresa = req.user.sub; 
+        llamadasModel.horaInicio = parametros.horaInicio;
+        llamadasModel.horaFin = new Date().toLocaleTimeString();
+        llamadasModel.tipo = parametros.tipo;
+        llamadasModel.finalizada = false;
+        llamadasModel.idUsuario = parametros.idUsuario;
 
-    Sucursales.find({ nombreSucursal: parametros.nombreSucursal,direccionSucursal:parametros.direccionSucursal,idEmpresa:req.user.sub},
-        (err, sucursalGuardada) => {
-        if (sucursalGuardada.length==0) {
-            sucursalModel.save((err, sucGuardada) => {
-                console.log(err)
-                if (err) return res.status(500).send({ message: "error en la peticion" });
-                if (!sucGuardada) return res.status(404).send({ message: "No se puede agregar una sucursal" });
-                return res.status(200).send({ sucursales: sucGuardada  });
-            })  
-        } else {
-            return res.status(500).send({ message: 'sucursal existente' });
-        }
-    })
-    }else {
-        return res.status(500).send({ message: "error" })
-    }
+        llamadasModel.save((err, callGuardada) => {
+            
+            if (err){console.log(err)
+                 return res.status(500).send({ message: "error en la peticion" })} 
+            if (!callGuardada) return res.status(404).send({ message: "No se puede agregar la llamada" });
+            return res.status(200).send({ llamadas: callGuardada });
+        })
 }
 
 module.exports = {
-
+    guardarLlamada
 }

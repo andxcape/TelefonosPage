@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './login.css';
 
 
@@ -8,11 +9,18 @@ export const Login = () => {
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const Navegacion = useNavigate();
 
     function login() {
         let obj = { email: username, password: password }
-        axios.post('http://localhost:3000/api/login', obj).then((response) => {
-            console.log(response.data)
+        axios.post('http://localhost:3000/api/login', obj).then(({data}) => {
+            localStorage.setItem('id',data.objeto._id)
+            console.log(data)
+            Swal.fire({ icon: 'success', text: 'Inicio de sesión exitoso' }).then(() => {
+                Navegacion('/home')
+            })
+
+            
         }).catch((error) => {
             console.log(error)
         })
@@ -39,9 +47,9 @@ export const Login = () => {
 
                 <div className="text-center">
                     <Link to={'/registro'}>
-                    <p>No tienes una cuenta? <a href="#!">Registrate</a></p>
+                        <p>No tienes una cuenta? <a href="#!">Registrate</a></p>
                     </Link>
-                    
+
                 </div>
             </form>
         </>

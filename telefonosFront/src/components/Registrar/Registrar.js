@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import './registrar.css';
 
 
@@ -14,12 +15,16 @@ export const Registrar = () => {
   function register() {
       let obj = { nombre: name, email: email, password: password }
       axios.post('http://localhost:3000/api/registrarUsuario', obj).then((response) => {
-        Navegacion('/login')
+        Swal.fire({icon:'success', text:'Cuenta creada exitosamente'}).then(()=>{
+          Navegacion('/login')
+        })
           console.log(response.data)
       }).catch((error) => {
           console.log(error)
       })
   }
+
+
 
 
 
