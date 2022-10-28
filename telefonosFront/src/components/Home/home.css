@@ -1,17 +1,10 @@
 .jornada{
     padding-top: 25px;
-    padding-left: 42%;
-    
+    margin: 0 50px;
+    display: flex;
+    justify-content: space-around;
 }
-
-.bt{
-    padding-top: 25px;
-
+.botones-entrada button{
+    margin-right: 15px;
 }
-
-.search{
-    padding-top: 25px;
-    padding-left: 42%;
-}
-
 

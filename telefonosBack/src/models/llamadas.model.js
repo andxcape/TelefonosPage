@@ -8,7 +8,7 @@ var llamadasSchema = Schema ({
     horaInicio: String,
     horaFin: String,
     tipo: String,
-    finalizada: Boolean,
+    finalizada: String,
     idUsuario:{type:Schema.Types.ObjectId, ref:'usuarios'},
 });
 

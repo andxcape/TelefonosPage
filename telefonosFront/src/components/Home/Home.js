@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Tabla } from '../Tabla/Tabla';
+import { TablaUsuario } from "../Tabla/TablaUsuario";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import Swal from "sweetalert2";
@@ -47,7 +49,7 @@ export const Home = () => {
       .put("http://localhost:3000/api/horaEntrada/" + idUs, obj)
       .then((response) => {
         Swal.fire({ icon: "success", text: "Hora de entrada marcada" }).then(
-          () => {}
+          () => { }
         );
         console.log(response.data);
       })
@@ -62,7 +64,7 @@ export const Home = () => {
       .put("http://localhost:3000/api/horaSalida/" + idUs, obj)
       .then((response) => {
         Swal.fire({ icon: "success", text: "Hora de salida marcada" }).then(
-          () => {}
+          () => { }
         );
         console.log(response.data);
       })
@@ -74,27 +76,32 @@ export const Home = () => {
   return (
     <>
       <section className="jornada">
-        <button
-          type="button"
-          className="btn btn-light"
-          onClick={() => {
-            setHoraIn(new Date().toLocaleTimeString());
-            entrada();
-          }}
-        >
-          Entrada
-        </button>
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => {
-            setHoraOut(new Date().toLocaleTimeString());
-            salida();
-          }}
-        >
-          Salida
-        </button>
+        <div className="botones-entrada">
+          <button
+            type="button"
+            className="btn btn-light"
+            onClick={() => {
+              setHoraIn(new Date().toLocaleTimeString());
+              entrada();
+            }}
+          >
+            Entrada
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => {
+              setHoraOut(new Date().toLocaleTimeString());
+              salida();
+            }}
+          >
+            Salida
+          </button>
+        </div>
 
+        <div>
+          <TablaUsuario id={idUs} />
+        </div>
         <div className="bt">
           <button
             type="button"
@@ -173,20 +180,38 @@ export const Home = () => {
                 }}
                 value={tipo}
               >
-                <option selected>Carrera</option>
-                <option value="Informática">Informática</option>
-                <option value="Dibujo">Dibujo</option>
-                <option value="Mecánica">Mecánica</option>
-                <option value="Electrónica">Electrónica</option>
-                <option value="Electricidad">Electricidad</option>
-                <option value="Bachiller">Bachiller</option>
+                <option>Tipo</option>
+                <option value="Venta Nueva">Venta Nueva</option>
+                <option value="Venta por renovación">Venta por renovación</option>
+                <option value="Venta no completada">Venta no completada</option>
+                <option value="Venta no cumple el requisito">Venta no cumple el requisito</option>
               </select>
             </div>
+
+
+            <div className="modal-body">
+              <select
+                type="text"
+                className="form-select"
+                onChange={(e) => {
+                  setValores({ ...valores, finalizada: e.target.value });
+                }}
+                value={finalizada}
+              >
+                <option>Finalizada</option>
+                <option value="true">True</option>
+                <option value="false">False</option>
+
+              </select>
+            </div>
+
+
             <div className="modal-footer">
               <button
                 type="button"
                 className="btn btn-danger"
                 onClick={guardarCall}
+                data-bs-dismiss="modal"
               >
                 Guardar Llamada
               </button>
@@ -195,18 +220,8 @@ export const Home = () => {
         </div>
       </div>
 
-      <div className="search">
-        <div className="input-group">
-          <div className="form-outline">
-            <input type="date" id="form1" className="form-control" />
-          </div>
-          <button type="button" className="btn btn-danger">
-            <i className="fas fa-search"></i>
-          </button>
-        </div>
-      </div>
+      <Tabla id={idUs} />
 
-      
     </>
   );
 };

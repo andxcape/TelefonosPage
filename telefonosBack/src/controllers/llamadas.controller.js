@@ -12,7 +12,7 @@ function guardarLlamada(req, res) {
         llamadasModel.horaInicio = parametros.horaInicio;
         llamadasModel.horaFin = new Date().toLocaleTimeString();
         llamadasModel.tipo = parametros.tipo;
-        llamadasModel.finalizada = false;
+        llamadasModel.finalizada = parametros.finalizada;
         llamadasModel.idUsuario = parametros.idUsuario;
 
         llamadasModel.save((err, callGuardada) => {
@@ -24,22 +24,36 @@ function guardarLlamada(req, res) {
         })
 }
 
-function ObtenerLlamadaUsuario(req, res){
-    var nombreUsuario = req.params.nombreUsuario;
+// function ObtenerLlamadaUsuario(req, res){
+//     var nombreUsuario = req.params.nombreUsuario;
 
-        Usuarios.findOne({nombre: {$regex:nombreUsuario,$options:'i'}},(err, usuarioEncontrado)=>{
-            if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
-            if(!usuarioEncontrado) return res.status(404).send({mensaje : "Error, no se encuentran categorias con ese nombre"});
+//         Usuarios.findOne({nombre: {$regex:nombreUsuario,$options:'i'}},(err, usuarioEncontrado)=>{
+//             if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
+//             if(!usuarioEncontrado) return res.status(404).send({mensaje : "Error, no se encuentran categorias con ese nombre"});
 
-            Llamadas.find({idUsuario: usuarioEncontrado._id}, (err, llamadasUsuario)=>{
-                if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
-                if(!llamadasUsuario) return res.status(404).send({mensaje : "Error, no se encuentran productos en dicha categoria"});
+//             Llamadas.find({idUsuario: usuarioEncontrado._id}, (err, llamadasUsuario)=>{
+//                 if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
+//                 if(!llamadasUsuario) return res.status(404).send({mensaje : "Error, no se encuentran productos en dicha categoria"});
 
-                return res.status(200).send({llamadas: llamadasUsuario});
-            }).populate('idUsuario', 'nombreUsuario')
-        })
+//                 return res.status(200).send({llamadas: llamadasUsuario});
+//             }).populate('idUsuario', 'nombreUsuario')
+//         })
 
+// }
+
+
+function ObtenerLlamadaUsuario (req, res) {
+
+    var idUser = req.params.idUsuario;
+
+    Llamadas.find({idUsuario: idUser},(err, llamadasObtenidas) =>{
+        if(err) return res.send({mensaje:"Error: "+err})
+   
+        return res.send({llamadas: llamadasObtenidas})
+    })
 }
+
+
 
 module.exports = {
     guardarLlamada,

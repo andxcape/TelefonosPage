@@ -1,15 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
 export const Navbar = () => {
-
-    const [idUs, setIdUs] = useState('')
-
-    useEffect(() => {
-        setIdUs(localStorage.getItem('id'))
-    
-      }, [])
 
     function logOut(){
         localStorage.clear()
@@ -53,7 +46,7 @@ export const Navbar = () => {
                             </li>
                         </ul>
 
-                        <div className="d-flex align-items-center" htmlIf="">
+                        <div className="d-flex align-items-center">
                             <button type="button" className="btn btn-light px-3 me-2">
                                 <Link to={'/login'}> Login </Link>
                             </button>

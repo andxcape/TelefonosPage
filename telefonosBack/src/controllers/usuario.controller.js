@@ -79,9 +79,21 @@ function horaSalida(req, res) {
     })
 }
 
+function ObtenerUsuarioId(req, res){
+    var idUsuario = req.params.idUsuario
+
+    Usuarios.findById(idUsuario,(err,usuarioEncontrado)=>{
+        if (err) return res.status(500).send({ mensaje: 'Error en la peticion' });
+        if (!usuarioEncontrado) return res.status(404).send( { mensaje: 'Error al obtener el usuario' });
+        return res.status(200).send({ usuarios: [usuarioEncontrado] });
+        
+    })
+}
+
 module.exports = {
     login,
     registrarUsuario,
     horaEntrada,
-    horaSalida
+    horaSalida,
+    ObtenerUsuarioId
 }

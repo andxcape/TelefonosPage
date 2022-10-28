@@ -24,10 +24,6 @@ export const Registrar = () => {
       })
   }
 
-
-
-
-
   return (
     <>
       <form className='formulario'>
