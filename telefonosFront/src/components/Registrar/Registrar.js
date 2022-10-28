@@ -32,23 +32,28 @@ export const Registrar = () => {
     <>
       <form className='formulario'>
 
-        <div className="form-outline mb-4">
-          <input type="text" id="form2Example1" className="form-control" onChange={(e) => { setName(e.target.value) }} value={name}/>
-          <label className="form-label" htmlFor="form2Example1">Nombre</label>
+        <div className="modal-body">
+        <label className="form-label" htmlFor="form2Example2">Nombre</label>
+          <input type="text"  className="form-control" onChange={(e) => { setName(e.target.value) }} value={name}/>
+          
+          
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="modal-body">
+        <label className="form-label" htmlFor="form2Example2">Email</label>
           <input type="email" id="form2Example2" className="form-control" onChange={(e) => { setEmail(e.target.value) }} value={email}/>
-          <label className="form-label" htmlFor="form2Example2">Email</label>
+          
         </div>
 
-        <div className="form-outline mb-4">
+        <div className="modal-body">
+        <label className="form-label" htmlFor="form2Example2">Constraseña</label>
           <input type="password" id="form2Example2" className="form-control" onChange={(e) => { setPassword(e.target.value) }} value={password}/>
-          <label className="form-label" htmlFor="form2Example2">Constraseña</label>
+          
         </div>
 
+        <br></br>
 
-        <button type="button" className="btn btn-primary btn-block mb-4" onClick={register}>Registrarse</button>
+        <button type="button" className="btn btn-danger btn-block mb-4" onClick={register}>Registrarse</button>
 
 
         <div className="text-center">

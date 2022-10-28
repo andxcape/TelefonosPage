@@ -1,6 +1,6 @@
 const Llamadas = require('../models/llamadas.model');
-const bcrypt = require('bcrypt-nodejs');
-const jwt = require('../services/jwt');
+const Usuarios = require('../models/usuario.model');
+
 
 function guardarLlamada(req, res) {
     var parametros = req.body;
@@ -24,6 +24,24 @@ function guardarLlamada(req, res) {
         })
 }
 
+function ObtenerLlamadaUsuario(req, res){
+    var nombreUsuario = req.params.nombreUsuario;
+
+        Usuarios.findOne({nombre: {$regex:nombreUsuario,$options:'i'}},(err, usuarioEncontrado)=>{
+            if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
+            if(!usuarioEncontrado) return res.status(404).send({mensaje : "Error, no se encuentran categorias con ese nombre"});
+
+            Llamadas.find({idUsuario: usuarioEncontrado._id}, (err, llamadasUsuario)=>{
+                if(err) return res.status(500).send({ mensaje: "Error en la peticion"});
+                if(!llamadasUsuario) return res.status(404).send({mensaje : "Error, no se encuentran productos en dicha categoria"});
+
+                return res.status(200).send({llamadas: llamadasUsuario});
+            }).populate('idUsuario', 'nombreUsuario')
+        })
+
+}
+
 module.exports = {
-    guardarLlamada
+    guardarLlamada,
+    ObtenerLlamadaUsuario
 }
