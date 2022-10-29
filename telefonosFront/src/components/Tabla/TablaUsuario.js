@@ -25,7 +25,6 @@ export function TablaUsuario() {
   useEffect(() => {
     axios.get(`http://localhost:3000/api/obtenerUsuario/${localStorage.getItem('id')}`).then((response) => {
       setObjeto(response.data.usuarios)
-      console.log(response.data.usuarios)
       setRec(!rec)
     }).catch((error) => {
       console.log(error);

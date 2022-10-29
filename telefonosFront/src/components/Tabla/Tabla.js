@@ -15,12 +15,10 @@ function createData(numero, descripcion, solucion, horaInicio, horaFin, tipo, fi
 export function Tabla() {
   const [data, setData] = useState([]);
   const [rec, setRec] = useState(false);
-
+  
   const rows = data.map((row) => {
     return createData(row.numero, row.descripcion, row.solucion, row.horaInicio, row.horaFin, row.tipo, row.finalizada)
   })
-
-
 
   useEffect(() => {
     axios.get(`http://localhost:3000/api/obtenerLlamadas/${localStorage.getItem('id')}`).then((response) => {
@@ -47,8 +45,7 @@ export function Tabla() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <TableRow key={row._id} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow key={row._id}>
               <TableCell component="th" scope="row">
                 {row.numero}
               </TableCell>
