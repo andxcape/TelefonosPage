@@ -36,14 +36,14 @@ export const Registrar = () => {
         </div>
 
         <div className="modal-body">
-        <label className="form-label" htmlFor="form2Example2">Email</label>
-          <input type="email" id="form2Example2" className="form-control" onChange={(e) => { setEmail(e.target.value) }} value={email}/>
+        <label className="form-label">Email</label>
+          <input type="email" className="form-control" onChange={(e) => { setEmail(e.target.value) }} value={email}/>
           
         </div>
 
         <div className="modal-body">
-        <label className="form-label" htmlFor="form2Example2">Constraseña</label>
-          <input type="password" id="form2Example2" className="form-control" onChange={(e) => { setPassword(e.target.value) }} value={password}/>
+        <label className="form-label">Constraseña</label>
+          <input type="password" className="form-control" onChange={(e) => { setPassword(e.target.value) }} value={password}/>
           
         </div>
 

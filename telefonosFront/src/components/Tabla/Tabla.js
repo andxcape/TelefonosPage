@@ -1,37 +1,72 @@
-import * as React from 'react';
-import { useState, useEffect } from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import axios from 'axios';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
+import * as React from "react";
+import { useState, useEffect } from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import axios from "axios";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
 
-function createData(numero, descripcion, solucion, horaInicio, horaFin, tipo, finalizada) {
-  return { numero, descripcion, solucion, horaInicio, horaFin, tipo, finalizada };
+function createData(
+  numero,
+  descripcion,
+  solucion,
+  horaInicio,
+  horaFin,
+  tipo,
+  finalizada
+) {
+  return {
+    numero,
+    descripcion,
+    solucion,
+    horaInicio,
+    horaFin,
+    tipo,
+    finalizada,
+  };
 }
 
 export function Tabla() {
   const [data, setData] = useState([]);
   const [rec, setRec] = useState(false);
-  
+
   const rows = data.map((row) => {
-    return createData(row.numero, row.descripcion, row.solucion, row.horaInicio, row.horaFin, row.tipo, row.finalizada)
-  })
+    return createData(
+      row.numero,
+      row.descripcion,
+      row.solucion,
+      row.horaInicio,
+      row.horaFin,
+      row.tipo,
+      row.finalizada
+    );
+  });
 
   useEffect(() => {
-    axios.get(`http://localhost:3000/api/obtenerLlamadas/${localStorage.getItem('id')}`).then((response) => {
-      setData(response.data.llamadas)
-      setRec(!rec)
-    }).catch((error) => {
-      console.log(error);
-    });
-  }, [rec])
+    axios
+      .get(
+        `http://localhost:3000/api/obtenerLlamadas/${localStorage.getItem(
+          "id"
+        )}`
+      )
+      .then((response) => {
+        setData(response.data.llamadas);
+        setRec(!rec);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [rec]);
 
   return (
-    <TableContainer sx={{display:'flex', justifyContent: 'center'}} >
-      <Table sx={{ minWidth: 650, width: '90%', border: 2, marginTop: 10}} size="small" aria-label="a dense table">
+    <TableContainer sx={{ display: "flex", justifyContent: "center" }}>
+      <Table
+        sx={{ minWidth: 650, width: "90%", border: 2, marginTop: 10 }}
+        size="small"
+        aria-label="a dense table"
+      >
         <TableHead>
           <TableRow>
             <TableCell>Numero</TableCell>
@@ -43,9 +78,11 @@ export function Tabla() {
             <TableCell align="left">Finalizada</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row._id}>
+
+        {rows.map((row, id) => {
+          return(
+            <TableBody key={id}>
+            <TableRow>
               <TableCell component="th" scope="row">
                 {row.numero}
               </TableCell>
@@ -68,8 +105,9 @@ export function Tabla() {
                 {row.finalizada}
               </TableCell>
             </TableRow>
-          ))}
-        </TableBody>
+          </TableBody>
+          )
+        })}
       </Table>
     </TableContainer>
   );

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Tabla } from '../Tabla/Tabla';
+import { Tabla } from "../Tabla/Tabla";
 import { TablaUsuario } from "../Tabla/TablaUsuario";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
@@ -25,7 +25,9 @@ export const Home = () => {
   const { numero, descripcion, solucion, tipo, finalizada } = valores;
 
   useEffect(() => {
-    setIdUs(localStorage.getItem("id"));
+    if(localStorage.getItem('id') == undefined || localStorage.getItem('id') == null){
+      useNavigate('/')
+    }
   }, []);
 
   function horaInicioCall() {
@@ -46,10 +48,13 @@ export const Home = () => {
   function entrada() {
     let obj = { horaEntrada: horaIn };
     axios
-      .put("http://localhost:3000/api/horaEntrada/" + idUs, obj)
+      .put(
+        `http://localhost:3000/api/horaEntrada/${localStorage.getItem("id")}`,
+        obj
+      )
       .then((response) => {
         Swal.fire({ icon: "success", text: "Hora de entrada marcada" }).then(
-          () => { }
+          () => {}
         );
         console.log(response.data);
       })
@@ -61,10 +66,13 @@ export const Home = () => {
   function salida() {
     let obj = { horaSalida: horaOut };
     axios
-      .put("http://localhost:3000/api/horaSalida/" + idUs, obj)
+      .put(
+        `http://localhost:3000/api/horaSalida/${localStorage.getItem("id")}`,
+        obj
+      )
       .then((response) => {
         Swal.fire({ icon: "success", text: "Hora de salida marcada" }).then(
-          () => { }
+          () => {}
         );
         console.log(response.data);
       })
@@ -182,12 +190,15 @@ export const Home = () => {
               >
                 <option>Tipo</option>
                 <option value="Venta Nueva">Venta Nueva</option>
-                <option value="Venta por renovación">Venta por renovación</option>
+                <option value="Venta por renovación">
+                  Venta por renovación
+                </option>
                 <option value="Venta no completada">Venta no completada</option>
-                <option value="Venta no cumple el requisito">Venta no cumple el requisito</option>
+                <option value="Venta no cumple el requisito">
+                  Venta no cumple el requisito
+                </option>
               </select>
             </div>
-
 
             <div className="modal-body">
               <select
@@ -201,10 +212,8 @@ export const Home = () => {
                 <option>Finalizada</option>
                 <option value="true">True</option>
                 <option value="false">False</option>
-
               </select>
             </div>
-
 
             <div className="modal-footer">
               <button
@@ -221,7 +230,6 @@ export const Home = () => {
       </div>
 
       <Tabla id={idUs} />
-
     </>
   );
 };
