@@ -1,7 +1,17 @@
-import React from "react";
+import React, {useEffect} from "react";
+import { Link, useNavigate } from 'react-router-dom';
 import "./firstScreen.css";
 
 export const FirstScreen = () => {
+
+  const Navegacion = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token') != null){
+      Navegacion('/home')
+    }
+  })
+
   return (
     <>
       <img

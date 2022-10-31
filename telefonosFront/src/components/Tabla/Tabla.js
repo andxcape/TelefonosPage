@@ -28,9 +28,8 @@ function createData(
   };
 }
 
-export function Tabla() {
+export function Tabla({res}) {
   const [data, setData] = useState([]);
-  const [rec, setRec] = useState(false);
 
   const rows = data.map((row) => {
     return createData(
@@ -49,7 +48,7 @@ export function Tabla() {
       .get(
         `http://localhost:3000/api/obtenerLlamadas/${localStorage.getItem(
           "id"
-        )}`
+        )}`, {headers: {Authorization: localStorage.getItem('token')}}
       )
       .then((response) => {
         setData(response.data.llamadas);
@@ -58,7 +57,7 @@ export function Tabla() {
       .catch((error) => {
         console.log(error);
       });
-  }, [rec]);
+  }, [res]);
 
   return (
     <TableContainer sx={{ display: "flex", justifyContent: "center" }}>

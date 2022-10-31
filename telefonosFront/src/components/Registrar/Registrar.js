@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -11,6 +12,14 @@ export const Registrar = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const Navegacion = useNavigate();
+
+  useEffect(() => {
+    if (localStorage.getItem('token') != null){
+      Navegacion('/home')
+    }
+  })
+
+
 
   function register() {
       let obj = { nombre: name, email: email, password: password }

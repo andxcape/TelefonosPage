@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Tabla } from "../Tabla/Tabla";
 import { TablaUsuario } from "../Tabla/TablaUsuario";
 import { Link, useNavigate } from "react-router-dom";
 import "./home.css";
 import Swal from "sweetalert2";
+import { DataContext } from '../../context/DataContext';
 
 export const Home = () => {
+
+  const { data, setData } = useContext(DataContext);
   const [horaIn, setHoraIn] = useState("");
   const [horaOut, setHoraOut] = useState("");
   const [idUs, setIdUs] = useState("");
+  const [rec, setRec] = useState(false);
+  const [res, setRes] = useState(false);
 
   const [valores, setValores] = useState({
     numero: "",
@@ -20,12 +25,13 @@ export const Home = () => {
     tipo: "",
     finalizada: "",
     idUsuario: localStorage.getItem("id"),
+    jornada: ""
   });
 
   const { numero, descripcion, solucion, tipo, finalizada } = valores;
 
   useEffect(() => {
-    if(localStorage.getItem('id') == undefined || localStorage.getItem('id') == null){
+    if (localStorage.getItem('id') == undefined || localStorage.getItem('id') == null) {
       useNavigate('/')
     }
   }, []);
@@ -36,8 +42,9 @@ export const Home = () => {
 
   const guardarCall = () => {
     axios
-      .post("http://localhost:3000/api/guardarLlamada", valores)
+      .post("http://localhost:3000/api/guardarLlamada", valores, { headers: { Authorization: localStorage.getItem('token') } })
       .then((response) => {
+        setRes(!res)
         console.log(response.data);
       })
       .catch((error) => {
@@ -47,16 +54,19 @@ export const Home = () => {
 
   function entrada() {
     let obj = { horaEntrada: horaIn };
+    setData(1)
     axios
       .put(
         `http://localhost:3000/api/horaEntrada/${localStorage.getItem("id")}`,
-        obj
+        obj, { headers: { Authorization: localStorage.getItem('token') } }
       )
-      .then((response) => {
+      .then(({ response }) => {
+        setRec(!rec)
         Swal.fire({ icon: "success", text: "Hora de entrada marcada" }).then(
-          () => {}
+          () => { }
         );
         console.log(response.data);
+
       })
       .catch((error) => {
         console.log(error);
@@ -65,14 +75,16 @@ export const Home = () => {
 
   function salida() {
     let obj = { horaSalida: horaOut };
+
     axios
       .put(
         `http://localhost:3000/api/horaSalida/${localStorage.getItem("id")}`,
-        obj
+        obj, { headers: { Authorization: localStorage.getItem('token') } }
       )
       .then((response) => {
+        setRec(!rec)
         Swal.fire({ icon: "success", text: "Hora de salida marcada" }).then(
-          () => {}
+          () => { }
         );
         console.log(response.data);
       })
@@ -85,41 +97,61 @@ export const Home = () => {
     <>
       <section className="jornada">
         <div className="botones-entrada">
-          <button
+          {data == 0 ? (<button
             type="button"
             className="btn btn-light"
             onClick={() => {
               setHoraIn(new Date().toLocaleTimeString());
               entrada();
+              localStorage.setItem('valor', 1);
+              setData(localStorage.getItem('valor'));
             }}
           >
             Entrada
-          </button>
-          <button
-            type="button"
-            className="btn btn-danger"
-            onClick={() => {
-              setHoraOut(new Date().toLocaleTimeString());
-              salida();
-            }}
-          >
-            Salida
-          </button>
+          </button>) : null}
+          {data == 1 ? (
+            <>
+
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={() => {
+                  setHoraOut(new Date().toLocaleTimeString());
+                  salida();
+                  localStorage.setItem('valor', 0);
+                  setData(localStorage.getItem('valor'))
+                }}
+              >
+                Salida
+              </button>
+
+            </>
+          ) : null}
+
+
         </div>
 
         <div>
-          <TablaUsuario id={idUs} />
+          <TablaUsuario rec={rec} id={idUs} />
         </div>
         <div className="bt">
-          <button
-            type="button"
-            className="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#exampleModal"
-            onClick={horaInicioCall}
-          >
-            Iniciar una nueva llamada
-          </button>
+
+          {data == 1 ? (
+            <>
+              <button
+                type="button"
+                className="btn btn-danger"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                onClick={horaInicioCall}
+              >
+                Iniciar una nueva llamada
+              </button>
+            </>
+          ) : null}
+
+
+
         </div>
       </section>
 
@@ -229,7 +261,7 @@ export const Home = () => {
         </div>
       </div>
 
-      <Tabla id={idUs} />
+      <Tabla res={res} id={idUs} />
     </>
   );
 };

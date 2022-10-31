@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
@@ -11,11 +11,17 @@ export const Login = () => {
     const [password, setPassword] = useState('')
     const Navegacion = useNavigate();
 
+    useEffect(() => {
+        if(localStorage.getItem('token') != null){
+            Navegacion('/home')
+        }
+    })
+
     function login() {
         let obj = { email: username, password: password }
         axios.post('http://localhost:3000/api/login', obj).then(({data}) => {
             localStorage.setItem('id',data.objeto._id)
-            console.log(data)
+            localStorage.setItem('token', data.token)
             Swal.fire({ icon: 'success', text: 'Inicio de sesión exitoso' }).then(() => {
                 Navegacion('/home')
             })

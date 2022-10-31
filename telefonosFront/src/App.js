@@ -8,9 +8,12 @@ import { Tabla } from "./components/Tabla/Tabla";
 import { TablaUsuario } from "./components/Tabla/TablaUsuario";
 import { MDBBtn, MDBContainer } from 'mdb-react-ui-kit';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { DataProvider } from "./context/DataContext";
+
 
 function App() {
   return (
+    <DataProvider>
     <>
     <BrowserRouter>
     <Navbar />
@@ -24,6 +27,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   </>
+  </DataProvider>
   );
 }
 

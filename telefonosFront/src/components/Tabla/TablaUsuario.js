@@ -12,9 +12,8 @@ function createData(nombre, horaEntrada, horaSalida) {
   return { nombre, horaEntrada, horaSalida };
 }
 
-export function TablaUsuario() {
+export function TablaUsuario({rec}) {
   const [objeto, setObjeto] = useState([]);
-  const [rec, setRec] = useState(false);
 
   const rows = objeto.map((row) => {
     return createData(row.nombre, row.horaEntrada, row.horaSalida);
@@ -23,11 +22,10 @@ export function TablaUsuario() {
   useEffect(() => {
     axios
       .get(
-        `http://localhost:3000/api/obtenerUsuario/${localStorage.getItem("id")}`
+        `http://localhost:3000/api/obtenerUsuario/${localStorage.getItem("id")}`, {headers: {Authorization: localStorage.getItem('token')}}
       )
       .then((response) => {
         setObjeto(response.data.usuarios);
-        setRec(!rec);
       })
       .catch((error) => {
         console.log(error);

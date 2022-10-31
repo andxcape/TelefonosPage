@@ -7,7 +7,8 @@ var usuarioSchema = Schema ({
     password: String,
     rol: String,
     horaEntrada: String,
-    horaSalida: String
+    horaSalida: String,
+    jornada: String
 });
 
 module.exports = mongoose.model('usuarios', usuarioSchema);
