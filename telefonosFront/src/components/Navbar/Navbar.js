@@ -45,7 +45,7 @@ export const Navbar = () => {
                         
                         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <Link to={'/'}> <a className="nav-link" href="">Telefonos S.A</a></Link>
+                                <Link to={'/'}> <a className="nav-link">Telefonos S.A</a></Link>
                             </li>
                         </ul>
 
@@ -59,12 +59,9 @@ export const Navbar = () => {
                             <button type="button" className="btn btn-light px-3 me-2" onClick={logOut}>
                                 <Link to={'/'}> Logout </Link>
                             </button>
-                            <a
-                                className="btn btn-dark px-3"
-                                href="https://github.com/gperez2018345"
-                                role="button"
-                            ><i className="fab fa-github">
-                            </i></a>
+                            <a className="btn btn-dark px-3" href="https://github.com/gperez2018345" role="button" >
+                                <i className="fab fa-github" />
+                            </a>
                         </div>
                     </div>
                 </div>

@@ -55,7 +55,7 @@ export const Registrar = () => {
         <div className="text-center">
 
           <Link to={'/login'}>
-            <p>Tienes una cuenta? <a>Inicia Sesión</a></p>
+            <p>Tienes una cuenta?Inicia Sesión</p>
           </Link>
         </div>
       </form>

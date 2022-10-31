@@ -50,7 +50,7 @@ export const Login = () => {
 
                 <div className="text-center">
                     <Link to={'/registro'}>
-                        <p>No tienes una cuenta? <a href="#!">Registrate</a></p>
+                        <p>No tienes una cuenta? Registrate</p>
                     </Link>
 
                 </div>
