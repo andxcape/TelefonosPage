@@ -79,19 +79,6 @@ function horaSalida(req, res) {
     })
 }
 
-function jornada(req, res){
-    var idUser = req.params.idUsuario;
-
-    Usuarios.findById(idUser, {jornada: { $gte: new Date({horaEntrada}), $lte: new Date(horaSalida) } }, { new: true }, (err, usuarioEdit) => {
-
-        if (err) return res.status(500).send({ mensaje: 'Error en la peticion' });
-        if (!usuarioEdit) return res.status(400).send({ mensaje: 'No se puede ediar el usuario' });
-
-        return res.status(200).send({ usuarios: usuarioEdit });
-    })
-
-}
-
 function ObtenerUsuarioId(req, res){
     var idUsuario = req.params.idUsuario
 

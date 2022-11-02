@@ -18,6 +18,7 @@ export const Login = () => {
     })
 
     function login() {
+
         let obj = { email: username, password: password }
         axios.post('http://localhost:3000/api/login', obj).then(({data}) => {
             localStorage.setItem('id',data.objeto._id)
@@ -27,8 +28,9 @@ export const Login = () => {
             })
 
             
-        }).catch((error) => {
-            console.log(error)
+        }).catch(({response}) => {
+            console.log(response.data)
+            Swal.fire({icon: 'error', text: response.data.mensaje})
         })
     }
 
@@ -51,12 +53,12 @@ export const Login = () => {
 
                 <br></br>
 
-                <button type="button" className="btn btn-danger btn-block mb-4" onClick={login}>Iniciar Sesión</button>
+                <button type="button" disabled={username == '' || password == ''} className="btn btn-danger btn-block mb-4" onClick={login}>Iniciar Sesión</button>
 
 
                 <div className="text-center">
                     <Link to={'/registro'}>
-                        <p>No tienes una cuenta? Registrate</p>
+                        <p>¿No tienes una cuenta? Registrate</p>
                     </Link>
 
                 </div>

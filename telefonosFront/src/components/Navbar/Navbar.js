@@ -12,7 +12,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+      <nav className="navbar navbar-expand-lg ">
         <div className="container">
           <Link to={"/"}>
             {" "}
@@ -51,25 +51,31 @@ export const Navbar = () => {
 
             <div className="d-flex align-items-center">
               {localStorage.getItem("token") == null ? (
-                <button type="button" className="btn btn-light px-3 me-2">
-                  <Link to={"/login"}> Login </Link>
-                </button>
+                <Link to={"/login"}>
+                  <button type="button" className="btn btn-light px-3 me-2">
+                    Login
+                  </button>
+                </Link>
               ) : null}
               {localStorage.getItem("token") == null ? (
-              <button type="button" className="btn btn-light px-3 me-2">
-                <Link to={"/registro"}> Sign up </Link>
-              </button>
-              ):null}
-              
+                <Link to={"/registro"}>
+                  <button type="button" className="btn btn-dark px-3 me-2">
+                    Sign up
+                  </button>
+                </Link>
+              ) : null}
+
               {localStorage.getItem("token") != null ? (
-              <button
-                type="button"
-                className="btn btn-light px-3 me-2"
-                onClick={logOut}
-              >
-                <Link to={"/"}> Logout </Link>
-              </button>
-              ):null}
+                <Link to={"/"}>
+                  <button
+                    type="button"
+                    className="btn btn-danger px-3 me-2"
+                    onClick={logOut}
+                  >
+                    Logout
+                  </button>
+                </Link>
+              ) : null}
               <a
                 className="btn btn-dark px-3"
                 href="https://github.com/gperez2018345"

@@ -22,6 +22,7 @@ export const Registrar = () => {
 
 
   function register() {
+      if (email.match('[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,5}')){
       let obj = { nombre: name, email: email, password: password }
       axios.post('http://localhost:3000/api/registrarUsuario', obj).then((response) => {
         Swal.fire({icon:'success', text:'Cuenta creada exitosamente'}).then(()=>{
@@ -31,6 +32,9 @@ export const Registrar = () => {
       }).catch((error) => {
           console.log(error)
       })
+    }else{
+      Swal.fire({icon: 'error', text: 'Correo inválido'})
+    }
   }
 
   return (
@@ -39,14 +43,14 @@ export const Registrar = () => {
 
         <div className="modal-body">
         <label className="form-label" htmlFor="form2Example2">Nombre</label>
-          <input type="text"  className="form-control" onChange={(e) => { setName(e.target.value) }} value={name}/>
+          <input type="text"  className="form-control" onChange={(e) => { setName(e.target.value) }} value={name} required/>
           
           
         </div>
 
         <div className="modal-body">
         <label className="form-label">Email</label>
-          <input type="email" className="form-control" onChange={(e) => { setEmail(e.target.value) }} value={email}/>
+          <input type={"email"} className="form-control" onChange={(e) => { setEmail(e.target.value) }} value={email}/>
           
         </div>
 
@@ -58,13 +62,13 @@ export const Registrar = () => {
 
         <br></br>
 
-        <button type="button" className="btn btn-danger btn-block mb-4" onClick={register}>Registrarse</button>
+        <button type="button" disabled={name == '' || email == '' || password == ''} className="btn btn-danger btn-block mb-4" onClick={register}>Registrarse</button>
 
 
         <div className="text-center">
 
           <Link to={'/login'}>
-            <p>Tienes una cuenta?Inicia Sesión</p>
+            <p>¿Tienes una cuenta? Inicia Sesión</p>
           </Link>
         </div>
       </form>

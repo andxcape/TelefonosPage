@@ -35,15 +35,15 @@ export function TablaUsuario({rec}) {
   return (
     <TableContainer sx={{ display: "flex", justifyContent: "center" }}>
       <Table
-        sx={{ minWidth: 600, width: "80%", border: 2 }}
+        sx={{ minWidth: 100, width: "100%", border: 2 }}
         size="small"
         aria-label="a dense table"
       >
         <TableHead>
           <TableRow>
             <TableCell>Nombre</TableCell>
-            <TableCell align="left">Hora Entrada</TableCell>
-            <TableCell align="left">Hora Salida</TableCell>
+            <TableCell align="center">Jornada</TableCell>
+            
           </TableRow>
         </TableHead>
 
@@ -55,11 +55,8 @@ export function TablaUsuario({rec}) {
                 <TableCell component="th" scope="row">
                   {row.nombre}
                 </TableCell>
-                <TableCell component="th" scope="row">
-                  {row.horaEntrada}
-                </TableCell>
-                <TableCell component="th" scope="row">
-                  {row.horaSalida}
+                <TableCell align="center" scope="row">
+                  De {row.horaEntrada} a {row.horaSalida}
                 </TableCell>
               </TableRow>
             </TableBody>
