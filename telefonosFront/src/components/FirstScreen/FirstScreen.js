@@ -1,30 +1,30 @@
-import React, {useEffect} from "react";
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import "./firstScreen.css";
 
 export const FirstScreen = () => {
-
   const Navegacion = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('token') != null){
-      Navegacion('/home')
+    if (localStorage.getItem("token") != null) {
+      Navegacion("/home");
     }
-  })
+  });
 
   return (
     <>
       <img
-        src="https://img.freepik.com/free-vector/simple-blank-red-background-business_53876-120509.jpg?w=1380&t=st=1667228185~exp=1667228785~hmac=555474c02068967713085e211b8a47ed46dd696724a5ff8c3f61955f0c609963"
+        src="https://img.freepik.com/vector-gratis/ondulado-rojo-fondo-semitono_1409-1274.jpg?w=900&t=st=1667361110~exp=1667361710~hmac=2e04f592ca4382c518f9c897509a6436cd5394b7c5ed078b178aa2c461bb6971"
         height="94%"
-        width='100%'
+        width="100%"
         alt="MDB Logo"
         loading="lazy"
         style={{ objectFit: "cover", position: "absolute" }}
       />
       <div className="bg">
-
-        <div className="title" style={{position: "absolute"}}> <a> Telefonos S.A </a>
+        <div className="title" style={{ position: "absolute" }}>
+          {" "}
+          <a> Telefonos S.A </a>
           <img
             src="https://cdn-icons-png.flaticon.com/512/3616/3616215.png"
             height="90"

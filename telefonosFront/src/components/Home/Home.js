@@ -93,6 +93,7 @@ export const Home = () => {
       });
   }
 
+
   return (
     <>
       <section className="jornada">
